@@ -5,11 +5,12 @@
 [![Build Status][build-badge]][travis]
 [![Dependency Status][david-badge]][david]
 [![devDependency Status][david-dev-badge]][david-dev]
+[![XO code style][xo-badge]][xo]
 >
 >:nut_and_bolt: __Work in Progress__:nut_and_bolt:  
->:warning: Not for production use yet... stuff will break and some formatting rules are incomplete
+>:warning: Not for production use yet...
 
-Much more to come here.
+More to come here.
 
 Uses esFormatter and ESLint with xo's rules to automatically format javascript to xo format.
 
@@ -26,9 +27,12 @@ Uses esFormatter and ESLint with xo's rules to automatically format javascript t
 ```
 
 [project-badge]: http://img.shields.io/badge/status-alpha-red.svg?style=flat
-[build-badge]: http://img.shields.io/travis/MarkGriffiths/xo-barista.svg?branch=master&style=flat
-[david-badge]: http://img.shields.io/david/MarkGriffiths/xo-barista.svg?style=flat
-[david-dev-badge]: http://img.shields.io/david/dev/MarkGriffiths/xo-barista.svg?style=flat
-[travis]: https://travis-ci.org/MarkGriffiths/xo-barista
-[david]: https://david-dm.org/MarkGriffiths/xo-barista
-[david-dev]: https://david-dm.org/MarkGriffiths/xo-barista#info=devDependencies
+[build-badge]: http://img.shields.io/travis/MarkGriffiths/xo-tidy.svg?branch=master&style=flat
+[david-badge]: http://img.shields.io/david/MarkGriffiths/xo-tidy.svg?style=flat
+[david-dev-badge]: http://img.shields.io/david/dev/MarkGriffiths/xo-tidy.svg?style=flat
+[xo-badge]: https://img.shields.io/badge/code_style-XO-5ed9c7.svg
+
+[travis]: https://travis-ci.org/MarkGriffiths/xo-tidy
+[david]: https://david-dm.org/MarkGriffiths/xo-tidy
+[david-dev]: https://david-dm.org/MarkGriffiths/xo-tidy#info=devDependencies
+[xo]: https://github.com/sindresorhus/xo
