@@ -19,30 +19,27 @@ class Engine {
 		if (this.options.verbose) {
 			console.verbosity(5)
 		}
-		console.debug(`
-${clr.title}Resolved Options${clr.normal}:`)
+		console.debug(`\n${clr.title}Resolved Options${clr.normal}:`)
 		if (console.canWrite(5)) {
 			console.pretty(this.options, 2)
 		}
+		_esformatter.register(require('esformatter-dot-notation'))
+		_esformatter.register(require('esformatter-align'))
+		_esformatter.register(require('esformatter-parseint'))
+		_esformatter.register(require('esformatter-semicolons'))
 		const esFormatConfig = {
 			root: true,
 			allowShebang: true,
-			indent: {
-				value: '\t'
-			},
+			indent: {value: '\t'},
 			whiteSpace: {
-				before: {
-					IfStatementConditionalOpening: -1
-				},
+				before: {IfStatementConditionalOpening: -1},
 				after: {
 					IfStatementConditionalClosing: -1,
 					FunctionReservedWord: 1
 				}
 			},
 			lineBreak: {
-				after: {
-					ClassDeclarationClosingBrace: 0
-				}
+				after: {ClassDeclarationClosingBrace: 0}
 			}
 		}
 		if (this.options.space === !false) {
@@ -65,13 +62,11 @@ ${clr.title}Resolved Options${clr.normal}:`)
 				}
 			]
 		}
-		console.debug(`
-${clr.option}esFormatter Options${clr.normal}:`)
+		console.debug(`\n${clr.option}esFormatter Options${clr.normal}:`)
 		if (console.canWrite(5)) {
 			console.pretty(esFormatConfig, 2)
 		}
-		console.debug(`
-${clr.option}esLint Options${clr.normal}:`)
+		console.debug(`\n${clr.option}esLint Options${clr.normal}:`)
 		if (console.canWrite(5)) {
 			console.pretty(esLintConfig, 2)
 		}
@@ -102,8 +97,7 @@ ${clr.option}esLint Options${clr.normal}:`)
 			output = report.results[0].output
 		}
 		if (this.options.lint) {
-			console.debug(`
-${clr.title}xo-tidy verify formatting...${clr.normal}:`)
+			console.debug(`\n${clr.title}xo-tidy verify formatting...${clr.normal}:`)
 			if (console.canWrite(4)) {
 				console.info(cardinal.highlight(output, {
 					linenos: true

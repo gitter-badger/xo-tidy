@@ -1,7 +1,7 @@
 /* eslint new-cap: 0 */
 'use strict'
 /*
-	xo-tidy X
+	xo-tidy
 	Tidy babel output to xo format
 
 	Copyright (c) 2016 Mark Griffiths
@@ -95,7 +95,7 @@ exports.formatStream = function (options_ = {}) {
 		}
 
 		try {
-			file.contents = new Buffer(_xo.format(file.contents.toString()))
+			file.contents = new Buffer(_xo.format(`${file.contents.toString()}\n\n`))
 			this.push(file)
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('xo-tidy', err, {fileName: file.path}))

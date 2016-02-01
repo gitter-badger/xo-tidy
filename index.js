@@ -1,7 +1,7 @@
 /* eslint new-cap: 0 */
 'use strict'
 /*
-	xo-tidy X
+	xo-tidy
 	Tidy babel output to xo format
 
 	Copyright (c) 2016 Mark Griffiths
@@ -76,12 +76,12 @@ const console = global.vConsole === undefined ? global.vConsole = _verbosity2.de
 
 function setConfiguration(options_) {
 	return {
-		lint: options_.lint === undefined ? options_.lint = false : options_.lint,
-		esnext: options_.esnext === undefined ? options_.esnext = false : options_.esnext,
+		lint:      options_.lint === undefined ? options_.lint = false : options_.lint,
+		esnext:    options_.esnext === undefined ? options_.esnext = false : options_.esnext,
 		semicolon: options_.semicolon === undefined ? options_.semicolon = true : options_.semicolon,
-		space: options_.space === undefined ? options_.space = false : options_.space,
-		stdio: options_.stdio === undefined ? options_.stdio = false : options_.stdio,
-		rules: {
+		space:     options_.space === undefined ? options_.space = false : options_.space,
+		stdio:     options_.stdio === undefined ? options_.stdio = false : options_.stdio,
+		rules:     {
 			semi: [2, 'always']
 		}
 	}
@@ -137,7 +137,9 @@ exports.formatStream = function () {
 			}
 
 			try {
-				file.contents = new Buffer(_xo.format(file.contents.toString()))
+				file.contents = new Buffer(_xo.format(`${ file.contents.toString() }
+
+`))
 				this.push(file)
 			} catch (err) {
 				this.emit('error', new _gulpUtil2.default.PluginError('xo-tidy', err, {
@@ -161,4 +163,5 @@ exports.formatFiles = function () {
 	console.info(`
 ${ clr.title }Creating xo-tidy (files mode)...${ clr.normal }`)
 	throw new Error('Not implemented.')
-};
+}
+
