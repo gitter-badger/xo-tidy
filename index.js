@@ -1,10 +1,10 @@
-'use strict';
-
+/* eslint new-cap: 0 */
+'use strict'
 /*
-	xo-barista
-	Format Javascript with xo, optimising coffee-script for es6
+	xo-tidy X
+	Tidy babel output to xo format
 
-	Copyright (c) 2015 Mark Griffiths/The Bespoke Pixel
+	Copyright (c) 2016 Mark Griffiths
 
 	Permission is hereby granted, free of charge, to any person
 	obtaining a copy of this software and associated documentation
@@ -25,85 +25,140 @@
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-var _deepAssign, _engine, _options, _package, _stdin, clr, console, setConfiguration;
 
-clr = require('trucolor').simplePalette();
+var _trucolor = require('trucolor')
 
-console = global.vConsole != null ? global.vConsole : global.vConsole = require('verbosity').console({
-  out: process.stderr
-});
+var _trucolor2 = _interopRequireDefault(_trucolor)
 
-_package = require('./package.json');
+var _verbosity = require('verbosity')
 
-_engine = require('./lib/engine');
+var _verbosity2 = _interopRequireDefault(_verbosity)
 
-_options = require('pkg-conf');
+var _through = require('through2')
 
-_stdin = require('get-stdin');
+var _through2 = _interopRequireDefault(_through)
 
-_deepAssign = require('deep-assign');
+var _gulpUtil = require('gulp-util')
 
-setConfiguration = function(options_) {
-  return {
-    lint: options_.lint != null ? options_.lint : options_.lint = false,
-    esnext: options_.esnext != null ? options_.esnext : options_.esnext = false,
-    semicolon: options_.semicolon != null ? options_.semicolon : options_.semicolon = true,
-    barista: options_.barista != null ? options_.barista : options_.barista = false,
-    space: options_.space != null ? options_.space : options_.space = false,
-    stdio: options_.stdio != null ? options_.stdio : options_.stdio = false,
-    rules: {
-      semi: [2, 'always']
-    }
-  };
-};
+var _gulpUtil2 = _interopRequireDefault(_gulpUtil)
 
-exports.getName = function() {
-  return _package.name;
-};
+var _package = require('./package.json')
 
-exports.getDescription = function() {
-  return _package.description;
-};
+var _package2 = _interopRequireDefault(_package)
 
-exports.getVersion = function(long) {
-  switch (long) {
-    case 2:
-      return _package.name + " v" + _package.version;
-    default:
-      return _package.version;
-  }
-};
+var _pkgConf = require('pkg-conf')
 
-exports.formatStdin = function(options_) {
-  var _xo;
-  if (options_ == null) {
-    options_ = {};
-  }
-  console.info("\n" + clr.title + "Creating esformatter/eslint/xo engine (stdio mode)..." + clr.normal);
-  _xo = new _engine(_deepAssign(setConfiguration(options_), _options.sync('xo', '..')));
-  return _stdin().then(function(buffer) {
-    var err, error;
-    try {
-      process.stdout.write(_xo.format(buffer) + "\n");
-    } catch (error) {
-      err = error;
-      console.error(err);
-      return process.exit(1);
-    }
-  });
-};
+var _pkgConf2 = _interopRequireDefault(_pkgConf)
 
-exports.formatText = function(buffer_, options_) {
-  var _xo;
-  if (options_ == null) {
-    options_ = {};
-  }
-  console.info("\n" + clr.title + "Creating xo-barista engine (text mode)..." + clr.normal);
-  _xo = new _engine(_deepAssign(setConfiguration(options_), _options.sync('xo', '..')));
-  return _xo.format(buffer_.toString());
-};
+var _getStdin = require('get-stdin')
 
-exports.formatFiles = function() {
-  console.info("\n" + clr.title + "Creating esformatter/eslint/xo engine (files mode)..." + clr.normal);
-  throw new Error("Not implemented.");
+var _getStdin2 = _interopRequireDefault(_getStdin)
+
+var _deepAssign = require('deep-assign')
+
+var _deepAssign2 = _interopRequireDefault(_deepAssign)
+
+var _engine = require('./lib/engine')
+
+var _engine2 = _interopRequireDefault(_engine)
+
+function _interopRequireDefault(obj) {
+	return obj && obj.__esModule ? obj : {
+		default: obj
+	}
+}
+
+const clr = _trucolor2.default.simplePalette()
+
+const console = global.vConsole === undefined ? global.vConsole = _verbosity2.default.console({
+	out: process.stderr
+}) : global.vConsole
+
+function setConfiguration(options_) {
+	return {
+		lint: options_.lint === undefined ? options_.lint = false : options_.lint,
+		esnext: options_.esnext === undefined ? options_.esnext = false : options_.esnext,
+		semicolon: options_.semicolon === undefined ? options_.semicolon = true : options_.semicolon,
+		space: options_.space === undefined ? options_.space = false : options_.space,
+		stdio: options_.stdio === undefined ? options_.stdio = false : options_.stdio,
+		rules: {
+			semi: [2, 'always']
+		}
+	}
+}
+
+exports.getName = () => {
+	return _package2.default.name
+}
+
+exports.getDescription = () => {
+	return _package2.default.description
+}
+
+exports.getVersion = long => {
+	switch (long) {
+		case 2:
+			return `${ _package2.default.name } v${ _package2.default.version }`
+		default:
+			return _package2.default.version
+	}
+}
+
+exports.formatStdin = function () {
+	let options_ = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0]
+
+	console.info(`
+${ clr.title }Creating xo-tidy engine (stdio mode)...${ clr.normal }`)
+	const _xo = new _engine2.default((0, _deepAssign2.default)(setConfiguration(options_), _pkgConf2.default.sync('xo', '..')))
+	return (0, _getStdin2.default)().then(buffer => {
+		try {
+			process.stdout.write(`${ _xo.format(buffer) }
+`)
+		} catch (err_) {
+			console.error(err_)
+			return process.exit(1)
+		}
+	})
+}
+
+exports.formatStream = function () {
+	let options_ = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0]
+
+	const _xo = new _engine2.default((0, _deepAssign2.default)(setConfiguration(options_), _pkgConf2.default.sync('xo', '.')))
+	return _through2.default.obj(
+		function (file, enc, cb) {
+			if (file.isNull()) {
+				cb(null, file)
+				return
+			}
+			if (file.isStream()) {
+				cb(new _gulpUtil2.default.PluginError('xo-tidy', 'Streaming not supported'))
+				return
+			}
+
+			try {
+				file.contents = new Buffer(_xo.format(file.contents.toString()))
+				this.push(file)
+			} catch (err) {
+				this.emit('error', new _gulpUtil2.default.PluginError('xo-tidy', err, {
+					fileName: file.path
+				}))
+			}
+			cb()
+		})
+}
+
+exports.formatText = function (buffer_) {
+	let options_ = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1]
+
+	console.info(`
+${ clr.title }Creating xo-tidy engine (text mode)...${ clr.normal }`)
+	const _xo = new _engine2.default((0, _deepAssign2.default)(setConfiguration(options_), _pkgConf2.default.sync('xo', '..')))
+	return _xo.format(buffer_.toString())
+}
+
+exports.formatFiles = function () {
+	console.info(`
+${ clr.title }Creating xo-tidy (files mode)...${ clr.normal }`)
+	throw new Error('Not implemented.')
 };

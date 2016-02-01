@@ -7,7 +7,7 @@
 [![devDependency Status][david-dev-badge]][david-dev]
 >
 >:nut_and_bolt: __Work in Progress__:nut_and_bolt:  
->:warning: Not for production use yet... stuff will break and some formatting rules are incomplete
+>:warning: Not for production use yet...
 
 Much more to come here.
 
