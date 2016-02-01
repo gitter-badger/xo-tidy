@@ -1,6 +1,6 @@
 {
   "name": "@thebespokepixel/xo-tidy",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "post-babel xo formatting.",
   "main": "index.js",
   "bin": {
@@ -79,7 +79,8 @@
     ],
     "rules": {
       "key-spacing": [
-        0, {
+        0,
+        {
           "beforeColon": false,
           "afterColon": false
         }
@@ -87,12 +88,13 @@
       "prefer-const": 1,
       "no-var": 0,
       "new-cap": [
-        2, {
+        2,
+        {
           "newIsCap": false,
           "capIsNew": true
         }
       ]
     }
   },
-  "build_number": 106
+  "build_number": 0
 }
