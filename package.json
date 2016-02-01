@@ -1,6 +1,6 @@
 {
   "name": "@thebespokepixel/xo-tidy",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "post-babel xo formatting.",
   "main": "index.js",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MarkGriffiths/xo-barista.git"
+    "url": "https://github.com/MarkGriffiths/xo-tidy.git"
   },
   "keywords": [
     "xo",
@@ -25,9 +25,9 @@
   "author": "Mark Griffiths <mark@thebespokepixel.com> (http://thebespokepixel.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MarkGriffiths/xo-barista/issues"
+    "url": "https://github.com/MarkGriffiths/xo-tidy/issues"
   },
-  "homepage": "https://github.com/MarkGriffiths/xo-barista#readme",
+  "homepage": "https://github.com/MarkGriffiths/xo-tidy#readme",
   "dependencies": {
     "babel-eslint": "^5.0.0-beta6",
     "cardinal": "^0.6.0",
@@ -79,7 +79,8 @@
     ],
     "rules": {
       "key-spacing": [
-        0, {
+        0,
+        {
           "beforeColon": false,
           "afterColon": false
         }
@@ -87,12 +88,13 @@
       "prefer-const": 1,
       "no-var": 0,
       "new-cap": [
-        2, {
+        2,
+        {
           "newIsCap": false,
           "capIsNew": true
         }
       ]
     }
   },
-  "build_number": 106
+  "build_number": 0
 }
