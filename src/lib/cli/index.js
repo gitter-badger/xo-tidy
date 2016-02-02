@@ -19,13 +19,21 @@ const renderer = truwrap({
 
 yargs
 	.usage(`
-${clr.command}xo-tidy${clr.command.out}
-Format javascript according to xo style
+${ clr.title }xo-tidy${ clr.title.out } ${ clr.dim }v${xoTidy.getVersion()}${ clr.dim.out }
+
+Tidy babel output to (something approaching) xo style. Mainly concerned with white space, indentation and ASI preferences.
+
+Works as a CLI tool (piping stdin → stdout) and a vinyl stream formatter for gulp/through2. The module offers 'formatText', 'formatStdin' and 'formatStream' methods.
+
 Just like xo, configuration data will be applied when found in package.json files as the file system is traversed back to the root.
 
 Usage:
-${clr.command}cat ${clr.argument}inputFile ${clr.operator}| ${clr.command}xo-tidy ${clr.option}[options]
-`).options({
+
+${ clr.command }cat ${ clr.argument }inputFile ${ clr.operator }| ${ clr.command }xo-tidy ${ clr.option }[options] ${ clr.operator }> ${ clr.argument }outputFile${ clr.argument.out }
+
+${ clr.dim }... or ...${ clr.dim.out }
+
+${ clr.command }xo-tidy ${ clr.option }[options] ${ clr.operator }< ${ clr.argument }inputFile ${ clr.operator }> ${ clr.argument }outputFile${ clr.argument.out }`).options({
 	h: {
 		alias: 'help',
 		describe: 'Display this help.'
@@ -41,28 +49,28 @@ ${clr.command}cat ${clr.argument}inputFile ${clr.operator}| ${clr.command}xo-tid
 		describe: 'Be verbose. -VV Be loquacious.'
 	},
 	lint: {
-		boolean: true,
 		describe: 'Output linting information, rather than formatted output.'
 	},
 	esnext: {
-		boolean: true,
 		describe: 'Enable ES2015+ rule formatting.'
 	},
-	nosemicolon: {
-		boolean: true,
-		default: false,
-		describe: 'Strip semicolons normally handled by ASI.'
+	semicolon: {
+		describe: 'Use --no-semicolon to strip semicolons normally handled by ASI.'
 	},
 	space: {
 		describe: 'Specify number of spaces to indent instead of [tab].',
+		nargs: 1,
 		default: false
+	},
+	xopath: {
+		describe: 'Path to start searching for xo configuration. Useful for borrowing xo settings.',
+		nargs: 1,
+		default: '..'
 	},
 	color: {
 		describe: 'Force color output. Disable with --no-color'
 	}
-}).epilogue(`
-${clr.command}© 2014-2016 The Bespoke Pixel. ${clr.grey}Released under the MIT License.${clr.grey.out}
-`).wrap(renderer.getWidth())
+}).epilogue(`${clr.command}© 2014-2016 The Bespoke Pixel. ${clr.grey}Released under the MIT License.${clr.grey.out}`).wrap(renderer.getWidth())
 
 const argv = yargs.argv
 
@@ -101,9 +109,6 @@ ${clr.command}Extra-Verbose mode${clr.command.out}:`)
 			console.verbosity(3)
 	}
 }
-argv.semicolon = !argv.nosemicolon
-argv.space = argv.space && 2
-
 if (argv._.length > 0) {
 	try {
 		xoTidy.formatFiles(argv)
@@ -113,7 +118,6 @@ if (argv._.length > 0) {
 	}
 } else {
 	try {
-		argv.stdio = true
 		xoTidy.formatStdin(argv)
 	} catch (err_) {
 		console.error(err_.message)
