@@ -83,8 +83,8 @@ function setConfiguration() {
 		semicolon: true,
 		space:     false,
 		rules:     {
-				semi: [2, 'always']
-			}
+			semi: [2, 'always']
+		}
 	}
 
 	console.debug(`
@@ -128,27 +128,26 @@ ${ clr.title }Creating xo-tidy engine (stdio mode)...${ clr.normal }`)
 
 exports.formatStream = function (options_) {
 	const _xo = new _engine2.default(setConfiguration(options_))
-	return _through2.default.obj(
-		function (file, enc, cb) {
-			if (file.isNull()) {
-				cb(null, file)
-				return
-			}
-			if (file.isStream()) {
-				cb(new _gulpUtil2.default.PluginError('xo-tidy', 'Streaming not supported'))
-				return
-			}
-
-			try {
-				file.contents = new Buffer(_xo.format(`${ file.contents.toString() }`))
-				this.push(file)
-			} catch (err) {
-				this.emit('error', new _gulpUtil2.default.PluginError('xo-tidy', err, {
-					fileName: file.path
-				}))
-			}
+	return _through2.default.obj(function (file, enc, cb) {
+		if (file.isNull()) {
 			cb(null, file)
-		})
+			return
+		}
+		if (file.isStream()) {
+			cb(new _gulpUtil2.default.PluginError('xo-tidy', 'Streaming not supported'))
+			return
+		}
+
+		try {
+			file.contents = new Buffer(_xo.format(`${ file.contents.toString() }`))
+			this.push(file)
+		} catch (err) {
+			this.emit('error', new _gulpUtil2.default.PluginError('xo-tidy', err, {
+				fileName: file.path
+			}))
+		}
+		cb(null, file)
+	})
 }
 
 exports.formatText = function (buffer_, options_) {

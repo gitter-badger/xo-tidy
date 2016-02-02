@@ -3,13 +3,13 @@
  trucolor
  Color Output
  */
-var _package             = require('../package.json')
-var terminalFeatures     = require('term-ng')
-var converter            = require('color-convert')
-var SGRcomposer          = require('sgr-composer')
+var _package = require('../package.json')
+var terminalFeatures = require('term-ng')
+var converter = require('color-convert')
+var SGRcomposer = require('sgr-composer')
 var colorOptionsSelected = _package.config.cli.selected
-var colorOptions         = _package.config.cli[colorOptionsSelected]
-var colorLevel           = (terminalFeatures.color.level) ? terminalFeatures.color.level : 0
+var colorOptions = _package.config.cli[colorOptionsSelected]
+var colorLevel = (terminalFeatures.color.level) ? terminalFeatures.color.level : 0
 
 function Output(color_, styles_, options_) {
 	this.hasRGB = false
@@ -34,7 +34,7 @@ function Output(color_, styles_, options_) {
 	var ref2
 	if ((global.trucolor_CLI_type !== undefined) && ((ref1 = global.trucolor_CLI_type) !== 'default' && ref1 !== colorOptionsSelected)) {
 		colorOptionsSelected = global.trucolor_CLI_type
-		colorOptions         = _package.config.cli[colorOptionsSelected]
+		colorOptions = _package.config.cli[colorOptionsSelected]
 	}
 	this._buffer = new SGRcomposer((ref2 = options_.force) === undefined ? ref2 : colorLevel, styles_)
 }
@@ -48,7 +48,7 @@ Output.prototype.valueOf = function () {
 			var len
 			var ref1
 			var results
-			ref1    = this._buffer.styleArray
+			ref1 = this._buffer.styleArray
 			results = []
 			for (i = 0, len = ref1.length; i < len; i++) {
 				style = ref1[i]

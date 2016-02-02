@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 
 	function gruntEsformatter() {
 		var esformatter = require('esformatter')
-		var options     = this.options();
+		var options = this.options();
 
 		(options.plugins || []).forEach(registerPlugin)
 
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 
 			if (options.skipHashbang) {
 				firstLine = content.match(/^#!.+\n/)
-				content   = content.replace(firstLine, '')
+				content = content.replace(firstLine, '')
 			}
 
 			try {
