@@ -23,7 +23,6 @@ class Engine {
 			console.pretty(this.options, 2)
 		}
 		_esformatter.register(require('esformatter-dot-notation'))
-		_esformatter.register(require('esformatter-align'))
 		_esformatter.register(require('esformatter-parseint'))
 		_esformatter.register(require('esformatter-semicolons'))
 		const esFormatConfig = {

@@ -14,8 +14,7 @@ var colorLevel = (terminalFeatures.color.level) ? terminalFeatures.color.level :
 function Output(color_, styles_, options_) {
 	this.hasRGB = false;
 	if (color_ !== undefined) {
-		styles_.color = (
-		function () {
+		styles_.color = (function () {
 			switch (false) {
 				case !/^[#][0-9a-f]{6}$/i.test(color_):
 					this.hasRGB = true;
@@ -44,8 +43,7 @@ Output.prototype.valueOf = function () {
 	var style;
 	var styling;
 	if (global.trucolor_CLI_type !== undefined) {
-		styling = ((
-		function () {
+		styling = ((function () {
 			var i;
 			var len;
 			var ref1;
