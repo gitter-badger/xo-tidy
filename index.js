@@ -82,7 +82,6 @@ function setConfiguration() {
 		esnext:    false,
 		semicolon: true,
 		space:     false,
-		stdio:     false,
 		rules:     {
 				semi: [2, 'always']
 			}

@@ -31,17 +31,9 @@ class Engine {
 			allowShebang: true,
 			indent: {value: '\t'},
 			whiteSpace: {
-				before: {
-					IfStatementConditionalOpening: -1
-				},
-				after: {
-					IfStatementConditionalClosing: -1,
-					FunctionReservedWord: 1
-				}
-			},
-			lineBreak: {
-				after: {ClassDeclarationClosingBrace: 0}
-			}
+				before: {IfStatementConditionalOpening: -1},
+				after: {IfStatementConditionalClosing: -1, FunctionReservedWord: 1}},
+			lineBreak: {after: {ClassDeclarationClosingBrace: 0}}
 		}
 		if (this.options.space > 0) {
 			esFormatConfig.indent.value = ' '.repeat(parseInt(this.options.space, 10))

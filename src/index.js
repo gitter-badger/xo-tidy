@@ -45,7 +45,6 @@ function setConfiguration(options_ = {}) {
 		esnext:    false,
 		semicolon: true,
 		space:     false,
-		stdio:     false,
 		rules:     {semi: [2, 'always']}
 	}
 
