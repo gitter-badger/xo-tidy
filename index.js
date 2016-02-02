@@ -73,17 +73,27 @@ const console = global.vConsole === undefined ? global.vConsole = _verbosity2.de
 	out: process.stderr
 }) : global.vConsole
 
-function setConfiguration(options_) {
-	return {
-		lint:      options_.lint === undefined ? options_.lint = false : options_.lint,
-		esnext:    options_.esnext === undefined ? options_.esnext = false : options_.esnext,
-		semicolon: options_.semicolon === undefined ? options_.semicolon = true : options_.semicolon,
-		space:     options_.space === undefined ? options_.space = false : options_.space,
-		stdio:     options_.stdio === undefined ? options_.stdio = false : options_.stdio,
+function setConfiguration() {
+	let options_ = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0]
+
+	const baseOptions = {
+		xopath:    options_.xopath === undefined ? '..' : options_.xopath,
+		lint:      false,
+		esnext:    false,
+		semicolon: true,
+		space:     false,
+		stdio:     false,
 		rules:     {
-			semi: [2, 'always']
-		}
+				semi: [2, 'always']
+			}
 	}
+
+	console.debug(`
+${ clr.option }Base Options${ clr.normal }:`)
+	if (console.canWrite(5)) {
+		console.pretty(baseOptions, 5)
+	}
+	return (0, _deepAssign2.default)(baseOptions, _pkgConf2.default.sync('xo', baseOptions.xopath), options_)
 }
 
 exports.getName = () => {
@@ -103,16 +113,13 @@ exports.getVersion = long => {
 	}
 }
 
-exports.formatStdin = function () {
-	let options_ = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0]
-
+exports.formatStdin = function (options_) {
 	console.info(`
 ${ clr.title }Creating xo-tidy engine (stdio mode)...${ clr.normal }`)
-	const _xo = new _engine2.default((0, _deepAssign2.default)(setConfiguration(options_), _pkgConf2.default.sync('xo', '..')))
+	const _xo = new _engine2.default(setConfiguration(options_))
 	return (0, _getStdin2.default)().then(buffer => {
 		try {
-			process.stdout.write(`${ _xo.format(buffer) }
-`)
+			process.stdout.write(_xo.format(buffer))
 		} catch (err_) {
 			console.error(err_)
 			return process.exit(1)
@@ -120,10 +127,8 @@ ${ clr.title }Creating xo-tidy engine (stdio mode)...${ clr.normal }`)
 	})
 }
 
-exports.formatStream = function () {
-	let options_ = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0]
-
-	const _xo = new _engine2.default((0, _deepAssign2.default)(setConfiguration(options_), _pkgConf2.default.sync('xo', '.')))
+exports.formatStream = function (options_) {
+	const _xo = new _engine2.default(setConfiguration(options_))
 	return _through2.default.obj(
 		function (file, enc, cb) {
 			if (file.isNull()) {
@@ -136,31 +141,27 @@ exports.formatStream = function () {
 			}
 
 			try {
-				file.contents = new Buffer(_xo.format(`${ file.contents.toString() }
-
-`))
+				file.contents = new Buffer(_xo.format(`${ file.contents.toString() }`))
 				this.push(file)
 			} catch (err) {
 				this.emit('error', new _gulpUtil2.default.PluginError('xo-tidy', err, {
 					fileName: file.path
 				}))
 			}
-			cb()
+			cb(null, file)
 		})
 }
 
-exports.formatText = function (buffer_) {
-	let options_ = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1]
-
+exports.formatText = function (buffer_, options_) {
 	console.info(`
 ${ clr.title }Creating xo-tidy engine (text mode)...${ clr.normal }`)
-	const _xo = new _engine2.default((0, _deepAssign2.default)(setConfiguration(options_), _pkgConf2.default.sync('xo', '..')))
+	const _xo = new _engine2.default(setConfiguration(options_))
 	return _xo.format(buffer_.toString())
 }
 
 exports.formatFiles = function () {
 	console.info(`
 ${ clr.title }Creating xo-tidy (files mode)...${ clr.normal }`)
-	throw new Error('Not implemented.')
+	throw new Error('Not implemented yet.')
 }
 

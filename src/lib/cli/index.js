@@ -41,21 +41,23 @@ ${clr.command}cat ${clr.argument}inputFile ${clr.operator}| ${clr.command}xo-tid
 		describe: 'Be verbose. -VV Be loquacious.'
 	},
 	lint: {
-		boolean: true,
 		describe: 'Output linting information, rather than formatted output.'
 	},
 	esnext: {
-		boolean: true,
 		describe: 'Enable ES2015+ rule formatting.'
 	},
-	nosemicolon: {
-		boolean: true,
-		default: false,
-		describe: 'Strip semicolons normally handled by ASI.'
+	semicolon: {
+		describe: 'Use --no-semicolon to strip semicolons normally handled by ASI.'
 	},
 	space: {
 		describe: 'Specify number of spaces to indent instead of [tab].',
+		nargs: 1,
 		default: false
+	},
+	xopath: {
+		describe: 'Path to start searching for xo configuration.',
+		nargs: 1,
+		default: '..'
 	},
 	color: {
 		describe: 'Force color output. Disable with --no-color'
@@ -101,9 +103,6 @@ ${clr.command}Extra-Verbose mode${clr.command.out}:`)
 			console.verbosity(3)
 	}
 }
-argv.semicolon = !argv.nosemicolon
-argv.space = argv.space && 2
-
 if (argv._.length > 0) {
 	try {
 		xoTidy.formatFiles(argv)

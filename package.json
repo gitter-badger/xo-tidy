@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/MarkGriffiths/xo-tidy#readme",
   "dependencies": {
-    "babel-eslint": "^5.0.0-beta6",
+    "babel-eslint": "^5.0.0-beta9",
     "cardinal": "^0.6.0",
     "deep-assign": "^2.0.0",
     "esformatter": "^0.9.0",
@@ -86,6 +86,7 @@
       ],
       "prefer-const": 1,
       "no-var": 0,
+      "no-multi-spaces": 0,
       "new-cap": [
         2, {
           "newIsCap": false,
@@ -94,5 +95,5 @@
       ]
     }
   },
-  "build_number": 1
+  "build_number": 44
 }

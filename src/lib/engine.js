@@ -15,7 +15,6 @@ const console = global.vConsole
 class Engine {
 	constructor(options) {
 		this.options = options
-		this.ruleOverrides = {}
 		if (this.options.verbose) {
 			console.verbosity(5)
 		}
@@ -32,7 +31,9 @@ class Engine {
 			allowShebang: true,
 			indent: {value: '\t'},
 			whiteSpace: {
-				before: {IfStatementConditionalOpening: -1},
+				before: {
+					IfStatementConditionalOpening: -1
+				},
 				after: {
 					IfStatementConditionalClosing: -1,
 					FunctionReservedWord: 1
@@ -42,8 +43,8 @@ class Engine {
 				after: {ClassDeclarationClosingBrace: 0}
 			}
 		}
-		if (this.options.space === !false) {
-			esFormatConfig.indent.value = '        '.slice(0, Number(this.options.space) + 1)
+		if (this.options.space > 0) {
+			esFormatConfig.indent.value = ' '.repeat(parseInt(this.options.space, 10))
 		}
 		const esLintConfig = {
 			rules: this.options.rules
@@ -61,6 +62,12 @@ class Engine {
 					SwitchCase: 1
 				}
 			]
+		} else {
+			esLintConfig.rules.indent = [
+				2, parseInt(this.options.space, 10), {
+					SwitchCase: 0
+				}
+			]
 		}
 		console.debug(`\n${clr.option}esFormatter Options${clr.normal}:`)
 		if (console.canWrite(5)) {
@@ -74,7 +81,7 @@ class Engine {
 		this.xoFixer = new _ESLint({
 			baseConfig: esLintConfig,
 			fix: true,
-			rules: this.ruleOverrides
+			rules: this.options.rules
 		})
 	}
 

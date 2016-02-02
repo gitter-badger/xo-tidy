@@ -29,7 +29,7 @@ import verbosity from 'verbosity'
 import through from 'through2'
 import gutil from 'gulp-util'
 import pkg from './package.json'
-import options from 'pkg-conf'
+import pkgConf from 'pkg-conf'
 import stdin from 'get-stdin'
 import deepAssign from 'deep-assign'
 import Engine from './lib/engine'
@@ -38,17 +38,22 @@ const clr = trucolor.simplePalette()
 
 const console = global.vConsole === undefined ? global.vConsole = verbosity.console({out: process.stderr}) : global.vConsole
 
-function setConfiguration(options_) {
-	return {
-		lint: (options_.lint === undefined) ? options_.lint = false : options_.lint,
-		esnext: (options_.esnext === undefined) ? options_.esnext = false : options_.esnext,
-		semicolon: (options_.semicolon === undefined) ? options_.semicolon = true : options_.semicolon,
-		space: (options_.space === undefined) ? options_.space = false : options_.space,
-		stdio: (options_.stdio === undefined) ? options_.stdio = false : options_.stdio,
-		rules: {
-			semi: [2, 'always']
-		}
+function setConfiguration(options_ = {}) {
+	const baseOptions = {
+		xopath:    (options_.xopath === undefined) ? '..' : options_.xopath,
+		lint:      false,
+		esnext:    false,
+		semicolon: true,
+		space:     false,
+		stdio:     false,
+		rules:     {semi: [2, 'always']}
 	}
+
+	console.debug(`\n${clr.option}Base Options${clr.normal}:`)
+	if (console.canWrite(5)) {
+		console.pretty(baseOptions, 5)
+	}
+	return deepAssign(baseOptions, pkgConf.sync('xo', baseOptions.xopath), options_)
 }
 
 exports.getName = () => {
@@ -68,12 +73,12 @@ exports.getVersion = long => {
 	}
 }
 
-exports.formatStdin = function (options_ = {}) {
+exports.formatStdin = function (options_) {
 	console.info(`\n${clr.title}Creating xo-tidy engine (stdio mode)...${clr.normal}`)
-	const _xo = new Engine(deepAssign(setConfiguration(options_), options.sync('xo', '..')))
+	const _xo = new Engine(setConfiguration(options_))
 	return stdin().then(buffer => {
 		try {
-			process.stdout.write(`${_xo.format(buffer)}\n`)
+			process.stdout.write(_xo.format(buffer))
 		} catch (err_) {
 			console.error(err_)
 			return process.exit(1)
@@ -81,8 +86,8 @@ exports.formatStdin = function (options_ = {}) {
 	})
 }
 
-exports.formatStream = function (options_ = {}) {
-	const _xo = new Engine(deepAssign(setConfiguration(options_), options.sync('xo', '.')))
+exports.formatStream = function (options_) {
+	const _xo = new Engine(setConfiguration(options_))
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file)
@@ -94,23 +99,23 @@ exports.formatStream = function (options_ = {}) {
 		}
 
 		try {
-			file.contents = new Buffer(_xo.format(`${file.contents.toString()}\n\n`))
+			file.contents = new Buffer(_xo.format(`${file.contents.toString()}`))
 			this.push(file)
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('xo-tidy', err, {fileName: file.path}))
 		}
-		cb()
+		cb(null, file)
 	})
 }
 
-exports.formatText = function (buffer_, options_ = {}) {
+exports.formatText = function (buffer_, options_) {
 	console.info(`\n${clr.title}Creating xo-tidy engine (text mode)...${clr.normal}`)
-	const _xo = new Engine(deepAssign(setConfiguration(options_), options.sync('xo', '..')))
+	const _xo = new Engine(setConfiguration(options_))
 	return _xo.format(buffer_.toString())
 }
 
 exports.formatFiles = function () {
 	console.info(`\n${clr.title}Creating xo-tidy (files mode)...${clr.normal}`)
-	throw new Error('Not implemented.')
+	throw new Error('Not implemented yet.')
 }
 
