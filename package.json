@@ -1,6 +1,6 @@
 {
   "name": "@thebespokepixel/xo-tidy",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "post-babel xo formatting.",
   "main": "index.js",
   "bin": {
@@ -69,7 +69,8 @@
       "prefer-const": 1,
       "no-var": 0,
       "camelcase": [
-        1, {
+        1,
+        {
           "properties": "always"
         }
       ]
