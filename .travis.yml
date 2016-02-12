@@ -1,7 +1,10 @@
 language: node_js
 node_js:
-- 4.2
-- stable
+  - 4.2
+  - stable
+env:
+  - NODE_ENV=development
+  - NODE_ENV=production
 sudo: false
 before_install:
 - git config --add gitflow.branch.master master
