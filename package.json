@@ -1,6 +1,6 @@
 {
   "name": "@thebespokepixel/xo-tidy",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "post-babel xo formatting.",
   "main": "index.js",
   "bin": {
@@ -72,7 +72,8 @@
     ],
     "rules": {
       "key-spacing": [
-        0, {
+        0,
+        {
           "beforeColon": false,
           "afterColon": false
         }
@@ -81,12 +82,14 @@
       "no-var": 0,
       "no-multi-spaces": 0,
       "camelcase": [
-        1, {
+        1,
+        {
           "properties": "always"
         }
       ],
       "new-cap": [
-        2, {
+        2,
+        {
           "newIsCap": false,
           "capIsNew": true
         }
