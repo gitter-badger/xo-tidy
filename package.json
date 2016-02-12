@@ -7,7 +7,7 @@
     "xo-tidy": "./bin/xoTidy.js"
   },
   "scripts": {
-    "test": "xo && ava"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -65,29 +65,12 @@
   "xo": {
     "semicolon": false,
     "esnext": true,
-    "ignores": [
-      "lib/**/*.js",
-      "index.js"
-    ],
     "rules": {
-      "key-spacing": [
-        0, {
-          "beforeColon": false,
-          "afterColon": false
-        }
-      ],
       "prefer-const": 1,
       "no-var": 0,
-      "no-multi-spaces": 0,
       "camelcase": [
         1, {
           "properties": "always"
-        }
-      ],
-      "new-cap": [
-        2, {
-          "newIsCap": false,
-          "capIsNew": true
         }
       ]
     }

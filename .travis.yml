@@ -6,3 +6,6 @@ sudo: false
 before_install:
   - git config --add gitflow.branch.master master
   - npm i -g npm@latest
+before_script:
+  - npm install -g gulp
+script: gulp test

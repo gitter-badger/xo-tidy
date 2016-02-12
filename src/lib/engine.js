@@ -5,8 +5,8 @@
  */
 const clr = require('trucolor').simplePalette()
 const cardinal = require('cardinal')
-const _esformatter = require('esformatter')
-const eslint = require('eslint').CLIEngine
+const ESformatter = require('esformatter')
+const ESlint = require('eslint').CLIEngine
 const console = global.vConsole
 const cr = '\n'
 const tab = '\t'
@@ -35,13 +35,13 @@ class Engine {
 				}
 			}
 		}
-		_esformatter.register(noEqNull)
-		_esformatter.register(require('esformatter-var-each'))
-		_esformatter.register(require('esformatter-dot-notation'))
-		_esformatter.register(require('esformatter-parseint'))
-		_esformatter.register(require('esformatter-semicolons'))
-		_esformatter.register(require('esformatter-limit-linebreaks'))
-		const esFormatConfig = {
+		ESformatter.register(noEqNull)
+		ESformatter.register(require('esformatter-var-each'))
+		ESformatter.register(require('esformatter-dot-notation'))
+		ESformatter.register(require('esformatter-parseint'))
+		ESformatter.register(require('esformatter-semicolons'))
+		ESformatter.register(require('esformatter-limit-linebreaks'))
+		const ESFormatConfig = {
 			root: true,
 			allowShebang: true,
 			indent: {value: tab},
@@ -51,26 +51,26 @@ class Engine {
 			lineBreak: {after: {ClassDeclarationClosingBrace: 0}}
 		}
 		if (this.options.space > 0) {
-			esFormatConfig.indent.value = ' '.repeat(parseInt(this.options.space, 10))
+			ESFormatConfig.indent.value = ' '.repeat(parseInt(this.options.space, 10))
 		}
-		const esLintConfig = {
+		const ESLintConfig = {
 			rules: this.options.rules
 		}
-		esLintConfig.extends = 'xo'
+		ESLintConfig.extends = 'xo'
 		if (this.options.esnext) {
-			esLintConfig.extends = 'xo/esnext'
+			ESLintConfig.extends = 'xo/esnext'
 		}
 		if (!this.options.semicolon) {
-			esLintConfig.rules.semi = [2, 'never']
+			ESLintConfig.rules.semi = [2, 'never']
 		}
 		if (this.options.space === false) {
-			esLintConfig.rules.indent = [
+			ESLintConfig.rules.indent = [
 				2, 'tab', {
 					SwitchCase: 1
 				}
 			]
 		} else {
-			esLintConfig.rules.indent = [
+			ESLintConfig.rules.indent = [
 				2, parseInt(this.options.space, 10), {
 					SwitchCase: 0
 				}
@@ -78,15 +78,15 @@ class Engine {
 		}
 		console.debug(`${cr}${clr.option}esFormatter Options${clr.normal}:`)
 		if (console.canWrite(5)) {
-			console.pretty(esFormatConfig, 2)
+			console.pretty(ESFormatConfig, 2)
 		}
-		console.debug(`${cr}${clr.option}esLint Options${clr.normal}:`)
+		console.debug(`${cr}${clr.option}ESlint Options${clr.normal}:`)
 		if (console.canWrite(5)) {
-			console.pretty(esLintConfig, 2)
+			console.pretty(ESLintConfig, 2)
 		}
-		this.esFormatOptions = _esformatter.rc(esFormatConfig)
-		this.xoFixer = new eslint({
-			baseConfig: esLintConfig,
+		this.esFormatOptions = ESformatter.rc(ESFormatConfig)
+		this.xoFixer = new ESlint({
+			baseConfig: ESLintConfig,
 			fix: true,
 			rules: this.options.rules
 		})
@@ -96,7 +96,7 @@ class Engine {
 		let report
 		let output
 		try {
-			buffer_ = _esformatter.format(buffer_, this.esFormatOptions)
+			buffer_ = ESformatter.format(buffer_, this.esFormatOptions)
 		} catch (err_) {
 			console.trace(`Error while applying formatting. (${err_}). Trying to continue.`)
 		}
@@ -117,7 +117,7 @@ class Engine {
 					linenos: true
 				}))
 			}
-			process.stderr.write(eslint.getFormatter()(report.results))
+			process.stderr.write(ESlint.getFormatter()(report.results))
 			process.exit(0)
 		}
 		return output

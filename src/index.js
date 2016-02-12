@@ -41,11 +41,11 @@ function setConfiguration(options_ = {}) {
 	const {xopath = '.'} = options_
 	const baseOptions = {
 		xopath,
-		lint:      false,
-		esnext:    false,
+		lint: false,
+		esnext: false,
 		semicolon: true,
-		space:     false,
-		rules:     {semi: [2, 'always']}
+		space: false,
+		rules: {semi: [2, 'always']}
 	}
 	console.debug(`${cr}${clr.option}Base Options${clr.normal}:`)
 	if (console.canWrite(5)) {
