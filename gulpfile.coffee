@@ -5,23 +5,24 @@ Client Gulp File
 gulp = require 'gulp'
 cordial = require '@thebespokepixel/cordial'
 
-gulp.task 'bump',                              cordial.version.build.inc
-gulp.task 'reset',                             cordial.version.build.reset
-gulp.task 'write',                             cordial.version.build.write
+gulp.task 'bump',                            cordial.version.build.inc
+gulp.task 'reset',                           cordial.version.build.reset
+gulp.task 'write',                           cordial.version.build.write
 
-gulp.task 'babel',         ['bump', 'write'],  cordial.compile.babel  ['src/**/*.js'],     './'
-gulp.task 'babel-format',  ['bump', 'write'],  cordial.format.babel    'src/**/*.js',      './'
+gulp.task 'babel',        ['bump', 'write'], cordial.compile.babel  ['src/**/*.js'], './'
+gulp.task 'babel-format', ['bump', 'write'], cordial.format.babel   ['src/**/*.js'], './'
 
-gulp.task 'test',                              cordial.test.ava       ['test/*']
+gulp.task 'test',         ['xo'],            cordial.test.ava       ['test/*']
+gulp.task 'xo',                              cordial.test.xo        ['src/**/*.js', 'lib/**/*.js', 'index.js']
 
-gulp.task 'commit',                            cordial.git.commitAll
-gulp.task 'push',                              cordial.git.pushAll      'origin'
-gulp.task 'backup',        ['push'],           cordial.git.pushAll      'backup'
+gulp.task 'commit',                          cordial.git.commitAll
+gulp.task 'push',                            cordial.git.pushAll     'origin'
+gulp.task 'backup',       ['push'],          cordial.git.pushAll     'backup'
 
-gulp.task 'prerelease',    ['reset'], cordial.npm.version.set 'prerelease'
-gulp.task 'publish',       ['test'],  cordial.npm.publish
+gulp.task 'prerelease',   ['reset'],         cordial.npm.version.set 'prerelease'
+gulp.task 'publish',      ['test'],          cordial.npm.publish
 
-gulp.task 'default',       ['babel-format']
+gulp.task 'default',      ['babel-format']
 
 gulp.task 'post-flow-release-start', ['reset'], cordial.flow.release.start
 gulp.task 'post-flow-release-finish', ['publish', 'push']
