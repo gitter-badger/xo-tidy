@@ -113,5 +113,5 @@ Output.prototype.toSGR = function () {
 	return this._buffer.sgr()
 }
 
-
 module.exports = Output
+

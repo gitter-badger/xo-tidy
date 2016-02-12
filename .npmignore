@@ -4,7 +4,6 @@ test
 *.map
 .editorconfig
 .travis.yml
-gulpfile.coffee
-gulpfile.updated.coffee
+gulpfile.*
 .npmignore
 

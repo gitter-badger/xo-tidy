@@ -3,15 +3,15 @@
 	xo-tidy
 	Format Javascript with xo style.
  */
-import xoTidy from '../..'
-import trucolor from 'trucolor'
-import truwrap from 'truwrap'
-import updateNotifier from 'update-notifier'
-import yargs from 'yargs'
-import _package from '../../package.json'
-
-const clr = trucolor.simplePalette()
+const xoTidy = require('../..')
+const clr = require('trucolor').simplePalette()
+const truwrap = require('truwrap')
+const updateNotifier = require('update-notifier')
+const yargs = require('yargs')
+const _package = require('../../package.json')
 const console = global.vConsole
+const cr = '\n'
+
 const renderer = truwrap({
 	right: 0,
 	outStream: process.stderr
@@ -65,12 +65,12 @@ ${ clr.command }xo-tidy ${ clr.option }[options] ${ clr.operator }< ${ clr.argum
 	xopath: {
 		describe: 'Path to start searching for xo configuration. Useful for borrowing xo settings.',
 		nargs: 1,
-		default: '..'
+		default: '.'
 	},
 	color: {
 		describe: 'Force color output. Disable with --no-color'
 	}
-}).epilogue(`${clr.command}© 2014-2016 The Bespoke Pixel. ${clr.grey}Released under the MIT License.${clr.grey.out}`).wrap(renderer.getWidth())
+}).epilogue(`${clr.command}© 2016 The Bespoke Pixel. ${clr.grey}Released under the MIT License.${clr.grey.out}`).wrap(renderer.getWidth())
 
 const argv = yargs.argv
 
@@ -95,14 +95,12 @@ if (argv.verbose) {
 		case 1:
 			argv.lint = true
 			console.verbosity(4)
-			console.log(`
-${clr.command}Verbose mode${clr.command.out}:`)
+			console.log(`${cr}${clr.command}Verbose mode${clr.command.out}:`)
 			break
 		case 2:
 			argv.lint = true
 			console.verbosity(5)
-			console.log(`
-${clr.command}Extra-Verbose mode${clr.command.out}:`)
+			console.log(`${cr}${clr.command}Extra-Verbose mode${clr.command.out}:`)
 			console.yargs(argv)
 			break
 		default:
