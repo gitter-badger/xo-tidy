@@ -1,13 +1,10 @@
 'use strict'
 
 import pkg from '../package.json'
-// import stream from 'stream'
 import test from 'ava'
 import shell from 'shelljs'
 import semverRegex from 'semver-regex'
 import xoTidy from '../index.js'
-// const StreamProxy = new stream.PassThrough()
-// StreamProxy.setEncoding('utf8')
 
 test(`Module name is '${pkg.name}'.`, t => {
 	t.is(xoTidy.getName(), `${pkg.name}`)
