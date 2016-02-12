@@ -3,14 +3,13 @@
 	xo-tidy
 	Core Engine
  */
-import trucolor from 'trucolor'
-import cardinal from 'cardinal'
-import _esformatter from 'esformatter'
-import eslint from 'eslint'
-
-const _ESLint = eslint.CLIEngine
-const clr = trucolor.simplePalette()
+const clr = require('trucolor').simplePalette()
+const cardinal = require('cardinal')
+const _esformatter = require('esformatter')
+const eslint = require('eslint').CLIEngine
 const console = global.vConsole
+const cr = '\n'
+const tab = '\t'
 
 class Engine {
 	constructor(options) {
@@ -18,17 +17,34 @@ class Engine {
 		if (this.options.verbose) {
 			console.verbosity(5)
 		}
-		console.debug(`\n${clr.title}Resolved Options${clr.normal}:`)
+		console.debug(`${cr}${clr.title}Resolved Options${clr.normal}:`)
 		if (console.canWrite(5)) {
 			console.pretty(this.options, 2)
 		}
+		const noEqNull = {
+			tokenAfter: token => {
+				if (token.type === 'Punctuator') {
+					if ((token.value === '==') && (token.next.next.type === 'Null')) {
+						token.value = '==='
+						token.next.next.value = 'undefined'
+					}
+					if ((token.value === '!=') && (token.next.next.type === 'Null')) {
+						token.value = '!=='
+						token.next.next.value = 'undefined'
+					}
+				}
+			}
+		}
+		_esformatter.register(noEqNull)
+		_esformatter.register(require('esformatter-var-each'))
 		_esformatter.register(require('esformatter-dot-notation'))
 		_esformatter.register(require('esformatter-parseint'))
 		_esformatter.register(require('esformatter-semicolons'))
+		_esformatter.register(require('esformatter-limit-linebreaks'))
 		const esFormatConfig = {
 			root: true,
 			allowShebang: true,
-			indent: {value: '\t'},
+			indent: {value: tab},
 			whiteSpace: {
 				before: {IfStatementConditionalOpening: -1},
 				after: {IfStatementConditionalClosing: -1, FunctionReservedWord: 1}},
@@ -60,16 +76,16 @@ class Engine {
 				}
 			]
 		}
-		console.debug(`\n${clr.option}esFormatter Options${clr.normal}:`)
+		console.debug(`${cr}${clr.option}esFormatter Options${clr.normal}:`)
 		if (console.canWrite(5)) {
 			console.pretty(esFormatConfig, 2)
 		}
-		console.debug(`\n${clr.option}esLint Options${clr.normal}:`)
+		console.debug(`${cr}${clr.option}esLint Options${clr.normal}:`)
 		if (console.canWrite(5)) {
 			console.pretty(esLintConfig, 2)
 		}
 		this.esFormatOptions = _esformatter.rc(esFormatConfig)
-		this.xoFixer = new _ESLint({
+		this.xoFixer = new eslint({
 			baseConfig: esLintConfig,
 			fix: true,
 			rules: this.options.rules
@@ -95,13 +111,13 @@ class Engine {
 			output = report.results[0].output
 		}
 		if (this.options.lint) {
-			console.debug(`\n${clr.title}xo-tidy verify formatting...${clr.normal}:`)
+			console.debug(`${cr}${clr.title}xo-tidy verify formatting...${clr.normal}:`)
 			if (console.canWrite(4)) {
 				console.info(cardinal.highlight(output, {
 					linenos: true
 				}))
 			}
-			process.stderr.write(_ESLint.getFormatter()(report.results))
+			process.stderr.write(eslint.getFormatter()(report.results))
 			process.exit(0)
 		}
 		return output
