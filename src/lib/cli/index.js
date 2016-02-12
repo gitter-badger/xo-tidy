@@ -15,6 +15,22 @@ const renderer = require('truwrap')({
 	outStream: process.stderr
 })
 
+const usage = `
+${ clr.title }xo-tidy${ clr.title.out } ${ clr.dim }v${xoTidy.getVersion()}${ clr.dim.out }
+
+Tidy babel output to (something approaching) xo style. Mainly concerned with white space, indentation and ASI preferences.
+
+Works as a CLI tool (piping stdin → stdout) and a vinyl stream formatter for gulp/through2. The module offers 'formatText', 'formatStdin' and 'formatStream' methods.
+
+Just like xo, configuration data will be applied when found in package.json files as the file system is traversed back to the root.
+
+Usage:
+${ clr.command }cat ${ clr.argument }inputFile ${ clr.operator }| ${ clr.command }xo-tidy ${ clr.option }[options] ${ clr.operator }> ${ clr.argument }outputFile${ clr.argument.out }
+${ clr.dim }... or ...${ clr.dim.out }
+${ clr.command }xo-tidy ${ clr.option }[options] ${ clr.operator }< ${ clr.argument }inputFile ${ clr.operator }> ${ clr.argument }outputFile${ clr.argument.out }`
+
+const epilogue = `${clr.command}© 2016 The Bespoke Pixel. ${clr.grey}Released under the MIT License.${clr.grey.out}`
+
 yargs.strict().options({
 	h: {
 		alias: 'help',
@@ -53,28 +69,15 @@ yargs.strict().options({
 		describe: 'Force color output. Disable with --no-color'
 	}
 }).wrap(renderer.getWidth())
-
 const argv = yargs.argv
 updateNotifier({pkg}).notify()
 
 if (argv.help) {
-	renderer.write(`
-${ clr.title }xo-tidy${ clr.title.out } ${ clr.dim }v${xoTidy.getVersion()}${ clr.dim.out }
-
-Tidy babel output to (something approaching) xo style. Mainly concerned with white space, indentation and ASI preferences.
-
-Works as a CLI tool (piping stdin → stdout) and a vinyl stream formatter for gulp/through2. The module offers 'formatText', 'formatStdin' and 'formatStream' methods.
-
-Just like xo, configuration data will be applied when found in package.json files as the file system is traversed back to the root.
-
-Usage:
-${ clr.command }cat ${ clr.argument }inputFile ${ clr.operator }| ${ clr.command }xo-tidy ${ clr.option }[options] ${ clr.operator }> ${ clr.argument }outputFile${ clr.argument.out }
-${ clr.dim }... or ...${ clr.dim.out }
-${ clr.command }xo-tidy ${ clr.option }[options] ${ clr.operator }< ${ clr.argument }inputFile ${ clr.operator }> ${ clr.argument }outputFile${ clr.argument.out }`)
+	renderer.write(usage)
 	renderer.break(2)
 	renderer.write(yargs.help())
 	renderer.break()
-	renderer.write(`${clr.command}© 2016 The Bespoke Pixel. ${clr.grey}Released under the MIT License.${clr.grey.out}`)
+	renderer.write(epilogue)
 	renderer.break(2)
 	process.exit(0)
 }
