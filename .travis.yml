@@ -7,5 +7,5 @@ env:
   - NODE_ENV=production
 sudo: false
 before_install:
-- git config --add gitflow.branch.master master
-- npm i -g npm@latest
+  - git config --add gitflow.branch.master master
+  - npm i -g npm@latest
