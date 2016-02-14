@@ -22,15 +22,15 @@ npm i -D @thebespokepixel/xo-tidy # For programmatic use
 
 ### CLI Options:
 ```text
-  -h, --help     Display this help.
-  -v, --version  Return the current version on stdout. -vv Return name & version.
-  -V, --verbose  Be verbose. -VV Be loquacious.
-  --lint         Output linting information, rather than formatted output.
-  --esnext       Enable ES2015+ rule formatting.
-  --semicolon    Use --no-semicolon to strip semicolons normally handled by ASI.
-  --space        Specify number of spaces to indent instead of [tab].
-  --xopath       Path to start searching for xo configuration. Useful for borrowing xo settings.
-  --color        Force color output. Disable with --no-color
+-h, --help     Display help.
+-v, --version  Print version to stdout. -vv Print name & version.
+-V, --verbose  Be verbose. -VV Be loquacious.
+--lint         Output linting information, rather than formatted output.
+--esnext       Enable ES2015+ rule formatting.
+--semicolon    Use --no-semicolon to strip semicolons normally handled by ASI.
+--space        Specify number of spaces to indent instead of [tab].
+--xopath       Path to start searching for xo configuration.
+--color        Force color output. Disable with --no-color
 ```
 
 Just like xo, configuration data will be applied when found in package.json files as the file system is traversed back to the root.
@@ -72,7 +72,7 @@ gulp.src(src)
 ##### Options object:
 ```js
 {
-  xopath:    '..',
+  xopath:    '.',
   lint:      false,
   esnext:    false,
   semicolon: true,

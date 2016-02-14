@@ -7,13 +7,15 @@
     "xo-tidy": "./bin/xoTidy.js"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "generate-test-fixtures": "scripts/generate-test-fixtures"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/MarkGriffiths/xo-tidy.git"
   },
   "keywords": [
+    "❤️",
     "xo",
     "js",
     "javascript",
@@ -69,12 +71,11 @@
       "prefer-const": 1,
       "no-var": 0,
       "camelcase": [
-        1,
-        {
+        1, {
           "properties": "always"
         }
       ]
     }
   },
-  "build_number": 77
+  "build_number": 78
 }
