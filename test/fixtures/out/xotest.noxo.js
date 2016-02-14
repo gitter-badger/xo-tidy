@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 
 			if (options.skipHashbang) {
 				firstLine = content.match(/^#!.+\n/);
-				content = content.replace(firstLine, '');
+				content = content.replace(firstLine, "");
 			}
 
 			try {
