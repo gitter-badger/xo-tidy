@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh+https://github.com/MarkGriffiths/xo-tidy.git"
+    "url": "git+https://github.com/MarkGriffiths/xo-tidy.git"
   },
   "keywords": [
     "❤️",
