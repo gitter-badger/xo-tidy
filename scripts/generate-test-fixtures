@@ -1,0 +1,53 @@
+#! /bin/sh
+
+ask() {
+    # http://djm.me/ask
+    while true; do
+
+        if [ "${2:-}" = "Y" ]; then
+            prompt="Y/n"
+            default=Y
+        elif [ "${2:-}" = "N" ]; then
+            prompt="y/N"
+            default=N
+        else
+            prompt="y/n"
+            default=
+        fi
+
+        # Ask the question - use /dev/tty in case stdin is redirected from somewhere else
+        read -p "$1 [$prompt] " REPLY </dev/tty
+
+        # Default?
+        if [ -z "$REPLY" ]; then
+            REPLY=$default
+        fi
+
+        # Check if the reply is valid
+        case "$REPLY" in
+            Y*|y*) return 0 ;;
+            N*|n*) return 1 ;;
+        esac
+
+    done
+}
+
+echo "Generate test fixture output."
+echo "Verify xo-tidy output for correctness before regenerating output fixtures."
+echo "This should only be done after ESLint of ESFormatter updates that affect output."
+if ask "Are you sure?"; then
+	echo "1/6 Base XO Test..."
+	cat test/fixtures/in/xotest.js  | bin/xoTidy.js > test/fixtures/out/xotest.js
+	echo "2/6 XO Test without base xo package options..."
+	cat test/fixtures/in/xotest.js  | bin/xoTidy.js --xopath / > test/fixtures/out/xotest.noxo.js
+	echo "3/6 XO Test with declared indentation..."
+	cat test/fixtures/in/xotest.js  | bin/xoTidy.js --xopath / --space 2 > test/fixtures/out/xotest.space.js
+	echo "4/6 Base XO Test 2..."
+	cat test/fixtures/in/xotest2.js | bin/xoTidy.js > test/fixtures/out/xotest2.js
+	echo "5/6 XO Test 2 without base xo package options..."
+	cat test/fixtures/in/xotest2.js | bin/xoTidy.js --xopath / > test/fixtures/out/xotest2.noxo.js
+	echo "6/6 XO Test 2 with declared indentation..."
+	cat test/fixtures/in/xotest2.js | bin/xoTidy.js --xopath / --space 3 > test/fixtures/out/xotest2.space.js
+	xo --verbose
+	ava --verbose
+fi

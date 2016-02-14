@@ -26,7 +26,7 @@ function Output(color_, styles_, options_) {
 					this.hasReset = true;
 					return color_;
 				default:
-					throw new Error('Unrecognised color: ' + color_);
+					throw new Error("Unrecognised color: " + color_);
 			}
 		}).call(this);
 	}
@@ -64,7 +64,7 @@ Output.prototype.valueOf = function () {
 				case 'hex':
 					return styling + this._buffer.hex;
 				default:
-					return this._buffer.red + ' ' + this._buffer.green + ' ' + this._buffer.blue;
+					return this._buffer.red + " " + this._buffer.green + " " + this._buffer.blue;
 			}
 		} else if (this.hasReset) {
 			switch (this._buffer.color) {
@@ -88,7 +88,7 @@ Output.prototype.valueOf = function () {
 Output.prototype.toString = function () {
 	var output;
 	if (this.hasRGB) {
-		output = ('rgb(' + this._buffer.red + ', ' + this._buffer.green + ', ' + this._buffer.blue) + ')';
+		output = ("rgb(" + this._buffer.red + ", " + this._buffer.green + ", " + this._buffer.blue) + ')';
 	} else if (this.hasReset) {
 		output = this._buffer.color;
 	} else {
@@ -102,7 +102,7 @@ Output.prototype.toSwatch = function () {
 	var output;
 	sgr = this._buffer.sgr(['bold', 'italic', 'underline', 'invert']);
 	if (colorLevel > 0) {
-		output = sgr.in + '\u2588\u2588' + sgr.out;
+		output = sgr.in + "\u2588\u2588" + sgr.out;
 	} else {
 		output = '';
 	}
