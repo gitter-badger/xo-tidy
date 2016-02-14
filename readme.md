@@ -83,11 +83,11 @@ gulp.src(src)
 
 [project-badge]: http://img.shields.io/badge/status-alpha-red.svg?style=flat
 [build-badge]: http://img.shields.io/travis/MarkGriffiths/xo-tidy.svg?branch=master&style=flat
-[david-badge]: http://img.shields.io/david/MarkGriffiths/xo-tidy.svg?style=flat
-[david-dev-badge]: http://img.shields.io/david/dev/MarkGriffiths/xo-tidy.svg?style=flat
+[david-badge]: http://img.shields.io/david/MarkGriffiths/xo-tidy.svg?branch=master&style=flat
+[david-dev-badge]: http://img.shields.io/david/dev/MarkGriffiths/xo-tidy.svg?branch=master&style=flat
 [xo-badge]: https://img.shields.io/badge/code_style-XO-5ed9c7.svg
 
 [travis]: https://travis-ci.org/MarkGriffiths/xo-tidy
-[david]: https://david-dm.org/MarkGriffiths/xo-tidy
-[david-dev]: https://david-dm.org/MarkGriffiths/xo-tidy#info=devDependencies
+[david]: https://david-dm.org/MarkGriffiths/xo-tidy/master
+[david-dev]: https://david-dm.org/MarkGriffiths/xo-tidy/master#info=devDependencies
 [xo]: https://github.com/sindresorhus/xo
