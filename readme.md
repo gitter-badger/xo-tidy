@@ -1,4 +1,6 @@
 # xo-tidy 
+
+[![Join the chat at https://gitter.im/MarkGriffiths/xo-tidy](https://badges.gitter.im/MarkGriffiths/xo-tidy.svg)](https://gitter.im/MarkGriffiths/xo-tidy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 > Automatic xo code formatter, geared toward post babel output.
 >
 >![Project status][project-badge]
